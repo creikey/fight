@@ -1,0 +1,7 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/Style.uss?fileID=7433441132597879392&amp;guid=48d54549b7241e94c9ec91f20ad21bab&amp;type=3#Style" />
+    <ui:VisualElement style="flex-grow: 1; background-color: rgba(0, 0, 0, 0.78); align-items: center; justify-content: center;">
+        <ui:Label text="Error: " display-tooltip-when-elided="true" name="error" style="color: rgb(255, 255, 255); -unity-text-align: upper-center; top: 5%; position: absolute; width: 100%;" />
+        <ui:Button text="Back To Titlescreen" display-tooltip-when-elided="true" name="back" style="width: 294px;" />
+    </ui:VisualElement>
+</ui:UXML>

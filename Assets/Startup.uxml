@@ -1,0 +1,13 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/Style.uss?fileID=7433441132597879392&amp;guid=48d54549b7241e94c9ec91f20ad21bab&amp;type=3#Style" />
+    <ui:VisualElement name="bg" style="height: 100%; width: 100%; flex-grow: 1; align-items: center; justify-content: center; background-color: rgb(0, 0, 0);">
+        <ui:VisualElement name="panel" style="height: 312px; width: 264px; background-color: rgb(217, 202, 117); -unity-slice-left: 0; border-top-left-radius: 0; border-bottom-left-radius: 0; border-top-right-radius: 0; border-bottom-right-radius: 0; -unity-text-align: upper-left; justify-content: center; align-items: center; border-right-width: 0; border-right-color: rgb(176, 150, 0); border-bottom-color: rgb(175, 149, 0); border-bottom-width: 0;">
+            <ui:Label text="&lt;b&gt;FIGHT&lt;/b&gt;" display-tooltip-when-elided="true" style="font-size: 32px; position: absolute; top: 8px;" />
+            <ui:Button text="Host" display-tooltip-when-elided="true" name="host" class="Button" style="margin-bottom: 8px; margin-top: 8px; width: 146px;" />
+            <ui:VisualElement style="border-left-width: 2px; border-right-width: 2px; border-top-width: 2px; border-bottom-width: 2px; border-left-color: rgba(0, 0, 0, 0.39); border-right-color: rgba(0, 0, 0, 0.39); border-top-color: rgba(0, 0, 0, 0.39); border-bottom-color: rgba(0, 0, 0, 0.39); background-color: rgba(0, 0, 0, 0.16); border-top-left-radius: 8px; border-bottom-left-radius: 8px; border-top-right-radius: 8px; border-bottom-right-radius: 8px; padding-left: 6px; padding-right: 6px; padding-top: 6px; padding-bottom: 6px;">
+                <ui:TextField picking-mode="Ignore" value="lobby code" text="lobbycode" name="lobbycode" style="width: 131px; justify-content: flex-start; -unity-text-align: middle-center; background-color: rgba(255, 255, 255, 0); margin-bottom: 8px; margin-top: 8px;" />
+                <ui:Button text="Join" display-tooltip-when-elided="true" name="join" class="Button" style="margin-bottom: 8px; margin-top: 8px;" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
