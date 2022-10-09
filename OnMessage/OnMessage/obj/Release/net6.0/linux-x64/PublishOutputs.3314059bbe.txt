@@ -1,7 +1,0 @@
-C:\Users\Cameron\source\repos\OnMessage\OnMessage\bin\Release\net6.0\publish\OnMessage.deps.json
-C:\Users\Cameron\source\repos\OnMessage\OnMessage\bin\Release\net6.0\publish\OnMessage.runtimeconfig.json
-C:\Users\Cameron\source\repos\OnMessage\OnMessage\bin\Release\net6.0\publish\OnMessage.pdb
-C:\Users\Cameron\source\repos\OnMessage\OnMessage\bin\Release\net6.0\publish\Amazon.Lambda.APIGatewayEvents.dll
-C:\Users\Cameron\source\repos\OnMessage\OnMessage\bin\Release\net6.0\publish\Amazon.Lambda.Core.dll
-C:\Users\Cameron\source\repos\OnMessage\OnMessage\bin\Release\net6.0\publish\Amazon.Lambda.Serialization.SystemTextJson.dll
-C:\Users\Cameron\source\repos\OnMessage\OnMessage\bin\Release\net6.0\publish\OnMessage.dll

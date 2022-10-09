@@ -1,7 +1,0 @@
-C:\Users\Cameron\source\repos\FightLambda\FightLambda\bin\Release\net6.0\publish\FightLambda.deps.json
-C:\Users\Cameron\source\repos\FightLambda\FightLambda\bin\Release\net6.0\publish\FightLambda.runtimeconfig.json
-C:\Users\Cameron\source\repos\FightLambda\FightLambda\bin\Release\net6.0\publish\FightLambda.pdb
-C:\Users\Cameron\source\repos\FightLambda\FightLambda\bin\Release\net6.0\publish\Amazon.Lambda.APIGatewayEvents.dll
-C:\Users\Cameron\source\repos\FightLambda\FightLambda\bin\Release\net6.0\publish\Amazon.Lambda.Core.dll
-C:\Users\Cameron\source\repos\FightLambda\FightLambda\bin\Release\net6.0\publish\Amazon.Lambda.Serialization.SystemTextJson.dll
-C:\Users\Cameron\source\repos\FightLambda\FightLambda\bin\Release\net6.0\publish\FightLambda.dll

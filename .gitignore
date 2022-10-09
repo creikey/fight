@@ -1,5 +1,10 @@
+
 # Builds
 Build/
+OnMessage/OnMessage/bin
+OnMessage/OnMessage/obj
+FightLambda/FightLambda/bin
+FightLambda/FightLambda/obj
 
 # This .gitignore file should be placed at the root of your Unity project directory
 #

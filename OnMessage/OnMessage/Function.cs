@@ -49,6 +49,20 @@ public class Function
         await sendTo(request, request.RequestContext.ConnectionId, toSend);
     }
 
+    private async Task<string> getOtherConnectionid(Amazon.DynamoDBv2.AmazonDynamoDBClient client, ClientToServer msg)
+    {
+        Amazon.DynamoDBv2.Model.GetItemResponse myData = await client.GetItemAsync(TableName, new Dictionary<string, Amazon.DynamoDBv2.Model.AttributeValue>()
+                    {
+                        {"uuid", new Amazon.DynamoDBv2.Model.AttributeValue(msg.uuid)},
+                    });
+        Amazon.DynamoDBv2.Model.GetItemResponse otherData = await client.GetItemAsync(TableName, new Dictionary<string, Amazon.DynamoDBv2.Model.AttributeValue>()
+                    {
+                        {"uuid", new Amazon.DynamoDBv2.Model.AttributeValue(myData.Item["otherPlayer"].S)},
+                    });
+
+        return otherData.Item["connectionId"].S;
+    }
+
     /// <summary>
     /// A simple function that takes a string and does a ToUpper
     /// </summary>
@@ -145,21 +159,19 @@ public class Function
                     break;
 
                 case ClientToServer.Type.MyRoundInput:
-                    Amazon.DynamoDBv2.Model.GetItemResponse myData = await client.GetItemAsync(TableName, new Dictionary<string, Amazon.DynamoDBv2.Model.AttributeValue>()
-                    {
-                        {"uuid", new Amazon.DynamoDBv2.Model.AttributeValue(msg.uuid)},
-                    });
-                    Amazon.DynamoDBv2.Model.GetItemResponse otherData = await client.GetItemAsync(TableName, new Dictionary<string, Amazon.DynamoDBv2.Model.AttributeValue>()
-                    {
-                        {"uuid", new Amazon.DynamoDBv2.Model.AttributeValue(myData.Item["otherPlayer"].S)},
-                    });
-
-                    await sendTo(request, otherData.Item["connectionId"].S, new ServerToClient
+                    await sendTo(request, await getOtherConnectionid(client, msg), new ServerToClient
                     {
                         type = ServerToClient.Type.RoundInput,
                         otherPlayerRoundInput = msg.roundInput,
                     });
-                    
+                    break;
+
+                case ClientToServer.Type.NewGameState:
+                    await sendTo(request, await getOtherConnectionid(client, msg), new ServerToClient
+                    {
+                        type = ServerToClient.Type.GameState,
+                        gameState = msg.newGameState,
+                    });
                     break;
             }
         }

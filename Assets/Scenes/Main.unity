@@ -846,6 +846,10 @@ PrefabInstance:
       propertyPath: isHostPlayer
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6056343004734081134, guid: d85f944c5454e3d41a63e615aa2970b9, type: 3}
+      propertyPath: isPlayerLeft
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6056343004734081135, guid: d85f944c5454e3d41a63e615aa2970b9, type: 3}
       propertyPath: m_Name
       value: PlayerRight

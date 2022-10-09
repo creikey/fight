@@ -2,6 +2,7 @@ using UnityEngine;
 using MessageTypes;
 using UnityEngine.UIElements;
 using UnityEngine.Assertions;
+using Newtonsoft.Json;
 
 public class GameSession : MonoBehaviour
 {
@@ -51,13 +52,22 @@ public class GameSession : MonoBehaviour
     public event OnNewInput OnMyInput;
     public event OnNewInput OnRemoteInput;
 
+    public delegate void UpdateGameState(GameState gs); // add YOUR data to the gamestate
+    public delegate void FromGameState(GameState gs); // do not mutate gs
+
+    public event UpdateGameState OnUpdateGameState;
+    public event FromGameState OnFromGameState;
+
 
     private NativeWebSocket.WebSocket sock = null;
     private string lobbycode = null;
 
     private void SendMessage(ClientToServer message)
     {
-        string toSend = Newtonsoft.Json.JsonConvert.SerializeObject(message);
+        string toSend = Newtonsoft.Json.JsonConvert.SerializeObject(message, new JsonSerializerSettings
+        {
+            NullValueHandling = NullValueHandling.Ignore,
+        });
         Debug.Log("Sending: " + toSend);
         sock.SendText(toSend).Wait();
     }
@@ -139,8 +149,13 @@ public class GameSession : MonoBehaviour
                 switch (msg.type)
                 {
                     case ServerToClient.Type.GameState:
-                        if (State != StateType.WaitingForInput) throw new System.Exception("Server gave game state but not ready for that yet");
-                        Assert.IsTrue(false);
+                        //if (State != StateType.WaitingForInput) throw new System.Exception("Server gave game state but not ready for that yet");
+                        
+                        if(OnFromGameState != null)
+                        {
+                            OnFromGameState(msg.gameState);
+                        }
+                        State = StateType.WaitingForInput;
                         break;
                     case ServerToClient.Type.RoundInput:
                         if(OnRemoteInput != null)
@@ -177,6 +192,8 @@ public class GameSession : MonoBehaviour
         sock.Connect();
     }
 
+    
+
     private void Update()
     {
 #if !UNITY_WEBGL || UNITY_EDITOR
@@ -209,6 +226,20 @@ public class GameSession : MonoBehaviour
                 processProgress += Time.unscaledDeltaTime * processSpeed;
                 if (processProgress > 1.0f)
                 {
+                    if(MultiplayerConfig.host)
+                    {
+                        var gs = new GameState();
+                        if(OnUpdateGameState != null)
+                        {
+                            OnUpdateGameState(gs);
+                        }
+                        SendMessage(new ClientToServer
+                        {
+                            type = ClientToServer.Type.NewGameState,
+                            uuid = uuid,
+                            newGameState = gs,
+                        });
+                    }
                     State = StateType.WaitingForInput;
                 }
                 float newScale = deltaCurve.Evaluate(processProgress);

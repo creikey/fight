@@ -1,39 +1,12 @@
-1. get some kind of aws lambda server in C# accessible from websockets, use online websockets tester
+ - serialize and sync gamestate
+ - add bomb throwing
+ - implement visuals below
+done!
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-2. connect to this server from unity and confirm ping response from server, export to web and test it there too
-3. get four letter lobby code save/joining working, and each client just sends their ID to the other one on a keypress
-4. each client sends their input to the other each round through websockets
-5. the host serializes and updates the game state in the database, client sets gamestate from it. This prevents desync
-6. add ability for players to hurt eachother
-7. playtest
+visuals for Fight: 
+ - plus signs that rotate in the background.
+ - square contrasty buttons with flat shading, that raise up when unpressed.
+ - use left mouse button to select movement and bomb, if click back on character then no bomb. big text at the top saying which phase in, like MOVE or BOMB
+ - ready button on bottom of screen for when you're done with your turn
+ - bombs blink three times then explode outwards 

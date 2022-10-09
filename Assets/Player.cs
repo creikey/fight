@@ -16,7 +16,7 @@ public class Player : MonoBehaviour
     public LineRenderer movePreviewLine;
     public LineRenderer actualMovementLine;
     public float speed = 10.0f;
-    public bool isHostPlayer = false;
+    public bool isPlayerLeft = true;
     float lineLength;
 
     private bool localInput = false;
@@ -92,13 +92,47 @@ public class Player : MonoBehaviour
         }
     }
 
+    private GameState.Player GetMyPlayer(GameState gs)
+    {
+        if (isPlayerLeft)
+        {
+            return gs.playerLeft;
+        }
+        else
+        {
+            return gs.playerRight;
+        }
+    }
+
+    void OnFromGameState(GameState gs)
+    {
+        GameState.Player me = GetMyPlayer(gs);
+        transform.position = U.from(me.position);
+        body.velocity = U.from(me.velocity);
+    }
+
+    void OnUpdateGameState(GameState gs)
+    {
+        GameState.Player me = GetMyPlayer(gs);
+        me.position = U.from(transform.position);
+        me.velocity = U.from(body.velocity);
+    }
+
+    private bool IsHostPlayer()
+    {
+        return isPlayerLeft;
+    }
+
     void OnEnable()
     {
-        if(isHostPlayer && MultiplayerConfig.host)
+        gs.OnFromGameState += OnFromGameState;
+        gs.OnUpdateGameState += OnUpdateGameState;
+
+        if(IsHostPlayer() && MultiplayerConfig.host)
         {
             localInput = true;
         }
-        else if(!isHostPlayer && !MultiplayerConfig.host)
+        else if(!IsHostPlayer() && !MultiplayerConfig.host)
         {
             localInput = true;
         }
@@ -118,6 +152,9 @@ public class Player : MonoBehaviour
     }
     void OnDisable()
     {
+        gs.OnFromGameState -= OnFromGameState;
+        gs.OnUpdateGameState -= OnUpdateGameState;
+
         // @Robust ensure isLocalPlayer hasn't changed when event was connected to, or just do this better...
         if (localInput)
         {
