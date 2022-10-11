@@ -10,21 +10,22 @@ using MessageTypes;
 public class Player : MonoBehaviour
 {
     // do not change gs after enabled, disable it first to remove input callback
+    // accessed by explosion to set the score
     public GameSession gs;
+
+    public GrenadeManager grenadeManager;
 
     public Rigidbody2D body;
     public LineRenderer movePreviewLine;
     public LineRenderer actualMovementLine;
-    public float speed = 10.0f;
+    public LineRenderer bombLine;
+    public float speed = 3.0f;
+    public int score;
     public bool isPlayerLeft = true;
     float lineLength;
 
+    private Vector2 bombInput = new Vector2(0.0f, 0.0f);
     private bool localInput = false;
-
-    void OnInput(Input input)
-    {
-        Debug.Log("Input: " + input);
-    }
 
     void Start()
     {
@@ -58,6 +59,8 @@ public class Player : MonoBehaviour
         //line.colorGradient.SetKeys(line.colorGradient.colorKeys, line.colorGradient.alphaKeys);
         //Debug.Log(Mathf.Lerp(line.colorGradient.alphaKeys[0].alpha, target, Time.unscaledDeltaTime * 100.0f));
 
+        bombLine.enabled = bombInput.SqrMagnitude() > 0.01f;
+
         switch (gs.State)
         {
             case GameSession.StateType.WaitingForInput:
@@ -80,14 +83,22 @@ public class Player : MonoBehaviour
                         PlayerInput newInput = new PlayerInput
                         {
                             movementDirection = U.from(dir),
+                            nadeThrow = U.from(bombInput),
                         };
                         actualMovementLine.SetPosition(1, movePreviewLine.GetPosition(1));
                         actualMovementLine.SetPosition(0, movePreviewLine.GetPosition(0));
                         gs.SupplyMyInput(newInput);
                     }
+
+                    if (Input.GetMouseButtonDown(1))
+                    {
+                        bombInput = dir;
+                    }
+                    bombLine.gameObject.transform.LookAt(bombLine.transform.position + (Vector3)bombInput);
                 }
                 break;
             case GameSession.StateType.Processing:
+                bombInput = new Vector2();
                 break;
         }
     }
@@ -107,6 +118,7 @@ public class Player : MonoBehaviour
     void OnFromGameState(GameState gs)
     {
         GameState.Player me = GetMyPlayer(gs);
+        score = me.score;
         transform.position = U.from(me.position);
         body.velocity = U.from(me.velocity);
     }
@@ -114,6 +126,7 @@ public class Player : MonoBehaviour
     void OnUpdateGameState(GameState gs)
     {
         GameState.Player me = GetMyPlayer(gs);
+        me.score = score;
         me.position = U.from(transform.position);
         me.velocity = U.from(body.velocity);
     }
@@ -173,6 +186,17 @@ public class Player : MonoBehaviour
 
         actualMovementLine.SetPosition(1, transform.position + dir * lineLength);
         actualMovementLine.SetPosition(0, transform.position);
+
+        // @Design I had it actually use force instead of hardsetting velocity, meaning movement from previous
+        // round influenced the current movement. This felt bad because when deciding what to do next, what
+        // momentum the player had was just not correctly visualized. Maybe some kind of really nice 
+        // visualization of the vector addition of new movement would make this good... Something to explore later
+        //body.AddForce(movementDirection * speed, ForceMode2D.Impulse);
         body.velocity = movementDirection * speed;
+
+        if (Vector3.SqrMagnitude(U.from(input.nadeThrow)) > 0.01f)
+        {
+            grenadeManager.SpawnGrenade(transform.position, U.from(input.nadeThrow));
+        }
     }
 }

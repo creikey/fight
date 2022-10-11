@@ -3,6 +3,7 @@ using MessageTypes;
 using UnityEngine.UIElements;
 using UnityEngine.Assertions;
 using Newtonsoft.Json;
+using UnityEngine.Windows;
 
 public class GameSession : MonoBehaviour
 {
@@ -16,6 +17,13 @@ public class GameSession : MonoBehaviour
     }
 
 
+    // exposed so explosion can get the alternate player from the player that was hit
+    // to change their score, but this is hacky, wonder if there is a better way...
+    // maybe global game state singleton with static variable for the state?
+    public Player playerLeft;
+    public Player playerRight;
+
+
     public AnimationCurve deltaCurve;
     public UIDocument ui;
     public string error { get; private set; } = ""; // set before changing state. @robust remove the setget on state for the error state, make only accessible through function
@@ -24,6 +32,10 @@ public class GameSession : MonoBehaviour
 
     private string uuid;
     private Label statusLabel;
+
+    private Label leftScoreLabel;
+    private Label rightScoreLabel;
+
     private bool sentMyInput = false;
     private bool receivedRemoteInput = false;
     private StateType _state = StateType.Connecting;
@@ -61,6 +73,9 @@ public class GameSession : MonoBehaviour
 
     private NativeWebSocket.WebSocket sock = null;
     private string lobbycode = null;
+    private PlayerInput myInput;
+    private PlayerInput remoteInput;
+
 
     private void SendMessage(ClientToServer message)
     {
@@ -74,26 +89,30 @@ public class GameSession : MonoBehaviour
 
     public void SupplyMyInput(PlayerInput input)
     {
-        if (OnMyInput != null)
-        {
-            OnMyInput(input);
-        }
-
         SendMessage(new ClientToServer
         {
             type = ClientToServer.Type.MyRoundInput,
             uuid = uuid,
             roundInput = input,
         });
-
+        myInput = input;
         sentMyInput = true;
         MaybeDoSimulate();
     }
+
 
     private void MaybeDoSimulate()
     {
         if(sentMyInput && receivedRemoteInput)
         {
+            if (OnMyInput != null)
+            {
+                OnMyInput(myInput);
+            }
+            if (OnRemoteInput != null)
+            {
+                OnRemoteInput(remoteInput);
+            }
             State = StateType.Processing;
         }
     }
@@ -110,6 +129,9 @@ public class GameSession : MonoBehaviour
         PauseTime();
 
         statusLabel = ui.rootVisualElement.Q<Label>("status");
+        rightScoreLabel = ui.rootVisualElement.Q<Label>("rightscore");
+        leftScoreLabel = ui.rootVisualElement.Q<Label>("leftscore");
+
         sock = new NativeWebSocket.WebSocket(MultiplayerConfig.url);
         State = StateType.Connecting;
         
@@ -158,10 +180,7 @@ public class GameSession : MonoBehaviour
                         State = StateType.WaitingForInput;
                         break;
                     case ServerToClient.Type.RoundInput:
-                        if(OnRemoteInput != null)
-                        {
-                            OnRemoteInput(msg.otherPlayerRoundInput);
-                        }
+                        remoteInput = msg.otherPlayerRoundInput;
                         receivedRemoteInput = true;
                         MaybeDoSimulate();
                         break;
@@ -199,6 +218,9 @@ public class GameSession : MonoBehaviour
 #if !UNITY_WEBGL || UNITY_EDITOR
         sock.DispatchMessageQueue();
 #endif
+        rightScoreLabel.text = playerRight.score.ToString();
+        leftScoreLabel.text = playerLeft.score.ToString();
+
         switch (State)
         {
             case StateType.Error:

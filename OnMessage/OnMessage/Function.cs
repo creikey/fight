@@ -16,12 +16,11 @@ using Newtonsoft.Json;
 
 namespace OnMessage;
 
-
-
 public class Function
 {
     const string TableName = "fight";
     const string LobbiesTableName = "fight-lobbies";
+    const int MaxMessageLength = 5000;
     const int MaxLobbies = 1000; // start at 1000 so always 3 digits
     const int InitialLobby = 100;
 
@@ -73,7 +72,7 @@ public class Function
     {
         try
         {
-            if (request.Body.Length > 1000)
+            if (request.Body.Length > MaxMessageLength)
             {
                 throw new Exception("Body too big");
             }

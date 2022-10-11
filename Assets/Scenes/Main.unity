@@ -582,6 +582,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 505a4b86f6a12664da250d77a3b948c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerLeft: {fileID: 6056343003951348133}
+  playerRight: {fileID: 1295889718}
   deltaCurve:
     serializedVersion: 2
     m_Curve:
@@ -595,6 +597,15 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0.2227622
     - serializedVersion: 3
+      time: 0.27442938
+      value: 0.7461054
+      inSlope: 0.123941556
+      outSlope: 0.123941556
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.23754697
+    - serializedVersion: 3
       time: 0.4962647
       value: 0.7603918
       inSlope: 0.047785647
@@ -603,6 +614,15 @@ MonoBehaviour:
       weightedMode: 0
       inWeight: 0.33333334
       outWeight: 0.128726
+    - serializedVersion: 3
+      time: 0.7584545
+      value: 0.755391
+      inSlope: 0.01402296
+      outSlope: 0.01402296
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.1702226
+      outWeight: 0.33333334
     - serializedVersion: 3
       time: 0.999981
       value: -0.0003338806
@@ -832,11 +852,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6056343004734081133, guid: d85f944c5454e3d41a63e615aa2970b9, type: 3}
       propertyPath: m_Color.b
-      value: 0.66024184
+      value: 0.41568628
       objectReference: {fileID: 0}
     - target: {fileID: 6056343004734081133, guid: d85f944c5454e3d41a63e615aa2970b9, type: 3}
       propertyPath: m_Color.r
-      value: 0.654902
+      value: 0.8392157
       objectReference: {fileID: 0}
     - target: {fileID: 6056343004734081134, guid: d85f944c5454e3d41a63e615aa2970b9, type: 3}
       propertyPath: gs
@@ -850,12 +870,80 @@ PrefabInstance:
       propertyPath: isPlayerLeft
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6056343004734081134, guid: d85f944c5454e3d41a63e615aa2970b9, type: 3}
+      propertyPath: grenadeManager
+      value: 
+      objectReference: {fileID: 1416662980}
     - target: {fileID: 6056343004734081135, guid: d85f944c5454e3d41a63e615aa2970b9, type: 3}
       propertyPath: m_Name
       value: PlayerRight
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d85f944c5454e3d41a63e615aa2970b9, type: 3}
+--- !u!58 &1295889717 stripped
+CircleCollider2D:
+  m_CorrespondingSourceObject: {fileID: 6056343004734081139, guid: d85f944c5454e3d41a63e615aa2970b9, type: 3}
+  m_PrefabInstance: {fileID: 1295889716}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1295889718 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6056343004734081134, guid: d85f944c5454e3d41a63e615aa2970b9, type: 3}
+  m_PrefabInstance: {fileID: 1295889716}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae574907178aee24d8fa84ee77ab519a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &1416662978
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1416662979}
+  - component: {fileID: 1416662980}
+  m_Layer: 0
+  m_Name: GrenadeManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1416662979
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1416662978}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1416662980
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1416662978}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ace1ddbc6a88b7498f75ed2d00df458, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gs: {fileID: 914037318}
+  grenade: {fileID: 8896815253136530163, guid: 0b37162c7695a1242b0049d99fd27b85, type: 3}
+  playerLeft: {fileID: 6056343003951348132}
+  playerRight: {fileID: 1295889717}
 --- !u!1 &1548738226
 GameObject:
   m_ObjectHideFlags: 0
@@ -983,7 +1071,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0.019607844, g: 0.1764706, b: 0.2509804, a: 1}
+  m_Color: {r: 0.21698111, g: 0.21698111, b: 0.21698111, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -1133,6 +1221,10 @@ PrefabInstance:
       propertyPath: gs
       value: 
       objectReference: {fileID: 914037318}
+    - target: {fileID: 6056343004734081134, guid: d85f944c5454e3d41a63e615aa2970b9, type: 3}
+      propertyPath: grenadeManager
+      value: 
+      objectReference: {fileID: 1416662980}
     - target: {fileID: 6056343004734081135, guid: d85f944c5454e3d41a63e615aa2970b9, type: 3}
       propertyPath: m_Name
       value: PlayerLeft
@@ -1143,6 +1235,22 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d85f944c5454e3d41a63e615aa2970b9, type: 3}
+--- !u!58 &6056343003951348132 stripped
+CircleCollider2D:
+  m_CorrespondingSourceObject: {fileID: 6056343004734081139, guid: d85f944c5454e3d41a63e615aa2970b9, type: 3}
+  m_PrefabInstance: {fileID: 6056343003951348131}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &6056343003951348133 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6056343004734081134, guid: d85f944c5454e3d41a63e615aa2970b9, type: 3}
+  m_PrefabInstance: {fileID: 6056343003951348131}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae574907178aee24d8fa84ee77ab519a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &8010716611399876041
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -1,3 +1,5 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <ui:Label text="This is the current status...." display-tooltip-when-elided="true" name="status" style="background-color: rgba(0, 0, 0, 0.51); -unity-text-align: upper-center; color: rgba(255, 255, 255, 255);" />
+    <ui:Label text="This is the current status...." display-tooltip-when-elided="true" name="status" style="background-color: rgba(0, 0, 0, 0.51); -unity-text-align: upper-center; color: rgb(255, 255, 255);" />
+    <ui:Label text="0" display-tooltip-when-elided="true" name="leftscore" style="position: absolute; bottom: 0; font-size: 42px; left: 3%;" />
+    <ui:Label text="0" display-tooltip-when-elided="true" name="rightscore" style="position: absolute; bottom: 0; right: 3%; -unity-text-align: upper-right; font-size: 42px;" />
 </ui:UXML>

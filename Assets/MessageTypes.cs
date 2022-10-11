@@ -1,4 +1,4 @@
-﻿
+﻿using System.Collections.Generic;
 using System.Numerics;
 
 namespace MessageTypes
@@ -12,16 +12,25 @@ namespace MessageTypes
         {
             public Vector2 position = new Vector2();
             public Vector2 velocity = new Vector2();
+            public int score = 0;
         }
 
+        public class Grenade
+        {
+            public Vector2 position = new Vector2();
+            public Vector2 velocity = new Vector2();
+            public float progress = 0.0f;
+        }
 
+        public List<Grenade> nades = new List<Grenade>();
         public Player playerLeft = new Player();
         public Player playerRight = new Player();
     }
 
     public class PlayerInput
     {
-        public Vector2 movementDirection;
+        public Vector2 movementDirection = new Vector2(1.0f, 0.0f);
+        public Vector2 nadeThrow = new Vector2(0.0f, 0.0f); // if it's zero, don't throw it!
     }
 
     public class ClientToServer
